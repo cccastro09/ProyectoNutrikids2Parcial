@@ -352,6 +352,7 @@ $(document).ready(function() {
               ) {
                 console.log('contadorLonchera')
                 puntajeJuego += element.puntos
+                actualizarPartida()
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
                 verifadorLeche = false
@@ -362,6 +363,7 @@ $(document).ready(function() {
               ) {
                 console.log('contadorLonchera')
                 puntajeJuego += element.puntos
+                actualizarPartida()
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
                 verifadorYogurt = false
@@ -376,6 +378,7 @@ $(document).ready(function() {
                 contene == imagenes.find(el => el.name == 'platano').id
               ) {
                 puntajeJuego += element.puntos
+                actualizarPartida()
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
                 verifadorPlatano = false
@@ -385,6 +388,7 @@ $(document).ready(function() {
                 contene == imagenes.find(el => el.name == 'pan').id
               ) {
                 puntajeJuego += element.puntos
+                actualizarPartida()
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
                 verifadorPan = false
@@ -400,6 +404,7 @@ $(document).ready(function() {
                 contene == imagenes.find(el => el.name == 'zanahoria').id
               ) {
                 puntajeJuego += element.puntos
+                actualizarPartida()
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
                 verifadorZanahoria = false
@@ -409,6 +414,7 @@ $(document).ready(function() {
                 contene == imagenes.find(el => el.name == 'tomate').id
               ) {
                 puntajeJuego += element.puntos
+                actualizarPartida()
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
                 verifadorTomate = false
@@ -418,6 +424,7 @@ $(document).ready(function() {
                 contene == imagenes.find(el => el.name == 'naranja').id
               ) {
                 puntajeJuego += element.puntos
+                actualizarPartida()
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
                 verifadorNranja = false

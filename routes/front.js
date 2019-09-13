@@ -124,6 +124,16 @@ router.get('/game', function(req, res, next) {
 
   res.render('front/juego')
 })
+
+
+router.get('/nivel2', function(req, res, next) {
+  //Pantalla para mostrar todos los usuario con rol 'N' (niño)
+
+  res.render('front/juego2')
+})
+
+
+
 router.get('/getimagenes', function(req, res, next) {
   //Pantalla para mostrar todos los usuario con rol 'N' (niño)
 
