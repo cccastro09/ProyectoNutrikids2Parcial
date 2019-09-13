@@ -16,9 +16,6 @@ $(document).ready(function() {
   var verifadorZanahoria = true
   var verifadorTomate = true
   var verifadorNranja = true
-  var verificadorCola = true
-  var verificadorPizza = true
-  var verificadorHamburguesa = true
 
   function actualizarPartida() {
     partida.puntaje = puntajeJuego
@@ -319,7 +316,7 @@ $(document).ready(function() {
     actualizarPartida()
   }
   $('.lonchCont').droppable({
-    accept: '.dañinos',
+    accept: '.alimentos',
     /*accept:  function( draggable ){   if (!$(this).hasClass('alimentos') || draggable.hasClass('ADañados')){   return true;}
         return false;
       },*/
@@ -335,49 +332,39 @@ $(document).ready(function() {
           ui.draggable.detach()
           let contene = element.id
           // console.log($ (ui.draggable).attr("class"))
-          if (contadorLonchera < 2) {
+          if (contadorLonchera < 4) {
             console.log('contadorLonchera')
             console.log(contadorLonchera)
             console.log(contene + 'ssss')
-            // if ($(ui.draggable).hasClass('dañinos')) {
-            //   $('#dañinos').append(ui.draggable)
-            //   malo.play()
-            //   return
-            // }
-
             if ($(ui.draggable).hasClass('dañinos')) {
+              $('#dañinos').append(ui.draggable)
+              malo.play()
+              return
+            }
+
+            if ($(ui.draggable).hasClass('contructores')) {
               console.log('contructoresasdasdasds')
               $('.cont1').append(ui.draggable)
 
               if (
-                verificadorCola == true &&
-                contene == imagenes.find(el => el.name == 'cola').id
+                verifadorLeche == true &&
+                contene == imagenes.find(el => el.name == 'leche').id
               ) {
                 console.log('contadorLonchera')
                 puntajeJuego += element.puntos
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
-                verificadorCola = false
+                verifadorLeche = false
               }
               if (
-                verificadorHamburguesa == true &&
-                contene == imagenes.find(el => el.name == 'hamburguesa').id
+                verifadorYogurt == true &&
+                contene == imagenes.find(el => el.name == 'yogurt').id
               ) {
                 console.log('contadorLonchera')
                 puntajeJuego += element.puntos
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
-                verificadorHamburguesa = false
-              }
-              if (
-                verificadorPizza == true &&
-                contene == imagenes.find(el => el.name == 'pizza').id
-              ) {
-                console.log('contadorLonchera')
-                puntajeJuego += element.puntos
-                $('.puntaje').text(puntajeJuego.toString())
-                contadorLonchera++
-                verificadorPizza = false
+                verifadorYogurt = false
               }
               return
             }
@@ -516,11 +503,12 @@ $(document).ready(function() {
             /* termina el codigo del json  */
 
             localStorage.removeItem('juego')
+            partida.estado = 't'
             actualizarPartida()
             $('.puntaje2').text(puntajeJuego.toString())
             hazArmado.play()
             hazArmado.addEventListener('ended', function() {
-              window.location.href = 'nivel2'
+              window.location.href = 'felicidades'
             })
           }
         }
