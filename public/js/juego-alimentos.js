@@ -4,6 +4,11 @@ $(document).ready(function() {
   var ruta = '../'
   var imagenes = []
   var tagImagenes = []
+  var puntajeJuego = 0
+  var contadorLonchera = 0
+  var retroceso = false
+  var partida
+  var idPartida
   var verifadorLeche = true
   var verifadorYogurt = true
   var verifadorPlatano = true
@@ -11,11 +16,6 @@ $(document).ready(function() {
   var verifadorZanahoria = true
   var verifadorTomate = true
   var verifadorNranja = true
-  var puntajeJuego = 0
-  var contadorLonchera = 0
-  var retroceso = false
-  var partida
-  var idPartida
 
   function actualizarPartida() {
     partida.puntaje = puntajeJuego
@@ -116,7 +116,7 @@ $(document).ready(function() {
       $('#energeticos').append(tagImagenes[i])
     } else if (imagenes[i].nutricion == 'contructores') {
       tagImagenes[i].className += ' contructores'
-
+      console.log('con')
       $('#contructores').append(tagImagenes[i])
     }
   }
@@ -177,36 +177,32 @@ $(document).ready(function() {
     drag: function(event, ui) {
       imagenes.forEach(element => {
         if ($(this).attr('id') == element.id) {
-          if (verifadorLeche == true && element.estado == 'i') {
-            console.log('sumando')
-            puntajeJuego += element.puntos
-            sumarPuntosAvatar()
-            $('.puntaje').text(puntajeJuego.toString())
-
-            contadorLonchera++
-            verifadorLeche = false
-          }
-
-          if (element.nutricion == 'sonidoHambur') {
+          if (element.sonido == 'sonidoHambur') {
             audiohamburguesa.play()
             return
           }
-          if (element.nutricion == 'sonidoPizza') {
+          if (element.sonido == 'sonidoPizza') {
             audioPizza.play()
           }
-          if (element.nutricion == 'sonidoCola') {
+          if (element.sonido == 'sonidoCola') {
             audioCocacola.play()
             return
           }
 
-          if (element.nutricion == 'energeticos') {
-            //   $('#contructores').find( this).each(function() {
-
-            //   });
+          if (element.sonido == 'sonidoLeche') {
+            $('#contructores')
+              .find(this)
+              .each(function() {
+                if (verifadorLeche == false) {
+                  puntajeJuego -= element.puntos
+                  $('.puntaje').text(puntajeJuego.toString())
+                  contadorLonchera--
+                  verifadorLeche = true
+                }
+              })
             audioLeche.play()
             return
           }
-
           if (element.sonido == 'sonidoYogurt') {
             $('#contructores')
               .find(this)
@@ -329,32 +325,42 @@ $(document).ready(function() {
       verifadorLeche = true
       imagenes.forEach(element => {
         if ($(ui.draggable).attr('id') == element.id) {
-          element.estado = 'l'
-
           console.log(element.puntos)
           console.log(puntajeJuego)
+          console.log(element.id)
+
           ui.draggable.detach()
           let contene = element.id
           // console.log($ (ui.draggable).attr("class"))
-          console.log('contadorLonchera')
-          console.log(contadorLonchera)
-          console.log(contene + 'ssss')
           if (contadorLonchera < 4) {
+            console.log('contadorLonchera')
+            console.log(contadorLonchera)
+            console.log(contene + 'ssss')
             if ($(ui.draggable).hasClass('dañinos')) {
               $('#dañinos').append(ui.draggable)
               malo.play()
               return
             }
+
             if ($(ui.draggable).hasClass('contructores')) {
+              console.log('contructoresasdasdasds')
               $('.cont1').append(ui.draggable)
 
-              if (verifadorLeche == true && contene == 4) {
+              if (
+                verifadorLeche == true &&
+                contene == imagenes.find(el => el.name == 'leche').id
+              ) {
+                console.log('contadorLonchera')
                 puntajeJuego += element.puntos
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
                 verifadorLeche = false
               }
-              if (verifadorYogurt == true && contene == 5) {
+              if (
+                verifadorYogurt == true &&
+                contene == imagenes.find(el => el.name == 'yogurt').id
+              ) {
+                console.log('contadorLonchera')
                 puntajeJuego += element.puntos
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
@@ -362,15 +368,22 @@ $(document).ready(function() {
               }
               return
             }
+
             if ($(ui.draggable).hasClass('energeticos')) {
               $('.cont2').append(ui.draggable)
-              if (verifadorPlatano == true && contene == 6) {
+              if (
+                verifadorPlatano == true &&
+                contene == imagenes.find(el => el.name == 'platano').id
+              ) {
                 puntajeJuego += element.puntos
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
                 verifadorPlatano = false
               }
-              if (verifadorPan == true && contene == 7) {
+              if (
+                verifadorPan == true &&
+                contene == imagenes.find(el => el.name == 'pan').id
+              ) {
                 puntajeJuego += element.puntos
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
@@ -382,19 +395,28 @@ $(document).ready(function() {
             if ($(ui.draggable).hasClass('reguladores')) {
               $('.cont3').append(ui.draggable /*, audioElement.play()*/)
 
-              if (verifadorZanahoria == true && contene == 8) {
+              if (
+                verifadorZanahoria == true &&
+                contene == imagenes.find(el => el.name == 'zanahoria').id
+              ) {
                 puntajeJuego += element.puntos
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
                 verifadorZanahoria = false
               }
-              if (verifadorTomate == true && contene == 9) {
+              if (
+                verifadorTomate == true &&
+                contene == imagenes.find(el => el.name == 'tomate').id
+              ) {
                 puntajeJuego += element.puntos
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
                 verifadorTomate = false
               }
-              if (verifadorNranja == true && contene == 10) {
+              if (
+                verifadorNranja == true &&
+                contene == imagenes.find(el => el.name == 'naranja').id
+              ) {
                 puntajeJuego += element.puntos
                 $('.puntaje').text(puntajeJuego.toString())
                 contadorLonchera++
@@ -485,10 +507,9 @@ $(document).ready(function() {
             actualizarPartida()
             $('.puntaje2').text(puntajeJuego.toString())
             hazArmado.play()
-            hazArmado.addEventListener("ended", function(){
-              
+            hazArmado.addEventListener('ended', function() {
               window.location.href = 'felicidades'
-         })
+            })
           }
         }
       })
@@ -524,15 +545,7 @@ $(document).ready(function() {
       imagenes.forEach(element => {
         if ($(ui.draggable).attr('id') == element.id) {
           let contene = element.id
-          console.log('comprobando')
-          if (element.estado == 'i') {
-            console.log('comprobando')
-            puntajeJuego += element.puntos
-          }
           $('#contructores').append(ui.draggable)
-          contadorLonchera--
-          puntajeJuego += -element.puntos
-          $('.puntaje').text(puntajeJuego.toString())
           $('#descarga').hide('slow')
           if (verifadorLeche == false && contene == 4) {
             puntajeJuego -= element.puntos
@@ -551,6 +564,7 @@ $(document).ready(function() {
       return
     }
   })
+
   $('#energeticos').droppable({
     accept: '.energeticos',
 
@@ -559,15 +573,7 @@ $(document).ready(function() {
       imagenes.forEach(element => {
         if ($(ui.draggable).attr('id') == element.id) {
           let contene = element.id
-          if (element.estado == 'i') {
-            console.log('comprobando')
-            puntajeJuego += element.puntos
-          }
           $('#energeticos').append(ui.draggable)
-
-          contadorLonchera--
-          puntajeJuego += -element.puntos
-          $('.puntaje').text(puntajeJuego.toString())
           $('#descarga').hide('slow')
           if (verifadorPlatano == false && contene == 6) {
             puntajeJuego -= element.puntos
@@ -586,25 +592,14 @@ $(document).ready(function() {
       return
     }
   })
+
   $('#reguladores').droppable({
     accept: '.reguladores',
     hoverClass: 'hovering',
     drop: function(ev, ui) {
       imagenes.forEach(element => {
         if ($(ui.draggable).attr('id') == element.id) {
-          retroceso = true
-          if (element.estado == 'i') {
-            console.log('comprobando')
-            puntajeJuego += element.puntos
-          }
           let contene = element.id
-          contadorLonchera--
-          console.log(puntajeJuego)
-          console.log(element.puntos)
-          puntajeJuego += -element.puntos
-          element.estado = 'i'
-          console.log(puntajeJuego)
-          $('.puntaje').text(puntajeJuego.toString())
           $('#reguladores').append(ui.draggable)
           $('#descarga').hide('slow')
           if (verifadorZanahoria == false && contene == 8) {
