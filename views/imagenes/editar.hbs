@@ -15,6 +15,7 @@ if(localStorage.getItem('usuario') == null || localStorage.getItem('usuario') ==
       <li ><a href="/usuarios">Usuarios</a></li>
       <li ><a href="/partidas">Partidas</a></li>
       <li ><a href="/imagenes">Imagenes</a></li>
+       <li ><a href="/alimentos">Alimentos</a></li>
     </ul>
   </div>
 </nav>
@@ -26,11 +27,11 @@ if(localStorage.getItem('usuario') == null || localStorage.getItem('usuario') ==
   </div>
     <div class="form-group">
     <label for="title">Foto:</label>
-    <input type="file" class="form-control" id="fotoavatar_editar">
+    <input type="file" class="form-control" id="foto_editar">
   </div>
   <div class="form-group">
-    <img src="{{imagenes.rutaImg}}" id="img_fotoavatar" width="100" height="100">
-    <input type="input" class="form-control hidden" id="img_fotoavatar_" name="input_fotoavatar" value="{{imagenes.rutaImg}}">
+    <img src="{{imagenes.rutaImg}}" id="img_foto" width="100" height="100">
+    <input type="input" class="form-control hidden" id="img_foto_" name="input_nombre" value="{{imagenes.rutaImg}}">
   </div>
   <div class="form-group">
     <label for="nutricion">Nutricion:</label>

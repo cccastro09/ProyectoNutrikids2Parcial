@@ -89,7 +89,7 @@ router.get('/:id', (req, res) => {
         nombre: req.body.nombre,
         fotoalimento: req.body.input_fotoalimento,
         fecha: req.body.fecha,
-        precio: req.body.precio
+        puntaje: req.body.puntaje
 
 
 

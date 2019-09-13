@@ -27,7 +27,7 @@ if(localStorage.getItem('usuario') == null || localStorage.getItem('usuario') ==
         <th>Nombre</th>
          <th>Imagen</th> 
          <th>Fecha</th>
-          <th>Precio</th>
+          <th>Puntaje</th>
 
 
     </tr>
@@ -39,7 +39,7 @@ if(localStorage.getItem('usuario') == null || localStorage.getItem('usuario') ==
         <td>{{nombre}}</td>
       <td><img src="{{fotoalimento}}" class="img-nombre" width="50" height="50"></td> 
         <td>{{fecha}}</td>
-        <td>{{precio}}</td>       
+        <td>{{puntaje}}</td>       
 
         <td><a href="/alimentos/{{id}}/edit" class="btn btn-primary" role="button">Editar</a></td>
         <td><a href="/alimentos/{{id}}" class="btn btn-primary" role="button">Eliminar</a></td>
