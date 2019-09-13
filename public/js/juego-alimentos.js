@@ -485,12 +485,12 @@ $(document).ready(function() {
             }
             /* termina el codigo del json  */
 
-            window.location.href = 'felicidades'
             localStorage.removeItem('juego')
             partida[0].estado = 't'
             actualizarPartida()
             hazArmado.play()
             $('.puntaje2').text(puntajeJuego.toString())
+            window.location.href = 'felicidades'
           }
         }
       })
