@@ -57,29 +57,25 @@ $(document).ready(function() {
 
   data = JSON.parse(localStorage.getItem('alimentos'))
   console.log(data)
-  if (localStorage.getItem('juego') == undefined) {
+  var req = new XMLHttpRequest()
+  // Petición HTTP GET síncrona hacia el archivo fotos.json del servidor
+  const server = window.location.origin //atrapa ruta del servidor
+  req.open(
+    'GET',
+    server + '/partidas/leerrPartidaActiva?usuario=' + usuario.id,
+    false
+  )
+  req.send(null)
+  let partidatmp = JSON.parse(req.responseText)
+  if (partidatmp.length === 0) {
     crearPartida()
   } else {
-    var req = new XMLHttpRequest()
-    // Petición HTTP GET síncrona hacia el archivo fotos.json del servidor
-    const server = window.location.origin //atrapa ruta del servidor
-    req.open(
-      'GET',
-      server + '/partidas/leerrPartidaActiva?usuario=' + usuario.id,
-      false
-    )
-    req.send(null)
-    let partidatmp = JSON.parse(req.responseText)
-    if (partidatmp.length === 0) {
-      crearPartida()
-    } else {
-      partida = partidatmp[0]
-      puntajeJuego = partida.puntaje
-      console.log(partida.idusuario)
-      console.log(usuario.id)
-      $('.puntaje').text(puntajeJuego.toString())
-      console.log(puntajeJuego)
-    }
+    partida = partidatmp[0]
+    puntajeJuego = partida.puntaje
+    console.log(partida.idusuario)
+    console.log(usuario.id)
+    $('.puntaje').text(puntajeJuego.toString())
+    console.log(puntajeJuego)
   }
 
   $.each(data, function(key, val) {
@@ -328,7 +324,6 @@ $(document).ready(function() {
     /*accept:  function( draggable ){   if (!$(this).hasClass('alimentos') || draggable.hasClass('ADañados')){   return true;}
         return false;
       },*/
-
     hoverClass: 'hovering',
     drop: function(ev, ui) {
       verifadorLeche = true
@@ -415,82 +410,85 @@ $(document).ready(function() {
             // window.alert("lonchera llena tu puntaje es " +puntajeJuego );
             $('.puntaje2').text(puntajeJuego.toString())
             /* se cear el json  */
-            createJSON()
-            function createJSON() {
-              var textRegu = ''
-              var textConst = ''
-              var textEnerg = ''
-              textRegu = ''
-              textConst = ''
-              textEnerg = ''
-              console.log(textEnerg)
-              $('#lonchRegu')
-                .find('.reguladores')
-                .each(function() {
-                  imagenes.forEach(element => {
-                    if (element.id == this.id) {
-                      textRegu += element.name + ' '
-                    }
-                  })
-                })
-              var res = textRegu.slice(0, -1)
-              let valores = res.split(' ')
+            // createJSON()
+            // function createJSON() {
+            //   var textRegu = ''
+            //   var textConst = ''
+            //   var textEnerg = ''
+            //   textRegu = ''
+            //   textConst = ''
+            //   textEnerg = ''
+            //   console.log(textEnerg)
+            //   $('#lonchRegu')
+            //     .find('.reguladores')
+            //     .each(function() {
+            //       imagenes.forEach(element => {
+            //         if (element.id == this.id) {
+            //           textRegu += element.name + ' '
+            //         }
+            //       })
+            //     })
+            //   var res = textRegu.slice(0, -1)
+            //   let valores = res.split(' ')
 
-              $('#lonchContru')
-                .find('.contructores')
-                .each(function() {
-                  imagenes.forEach(element => {
-                    if (element.id == this.id) {
-                      textConst += element.name + ' '
-                    }
-                  })
-                })
-              var res2 = textConst.slice(0, -1)
-              let valores2 = res2.split(' ')
+            //   $('#lonchContru')
+            //     .find('.contructores')
+            //     .each(function() {
+            //       imagenes.forEach(element => {
+            //         if (element.id == this.id) {
+            //           textConst += element.name + ' '
+            //         }
+            //       })
+            //     })
+            //   var res2 = textConst.slice(0, -1)
+            //   let valores2 = res2.split(' ')
 
-              $('#lonchEnerg')
-                .find('.energeticos')
-                .each(function() {
-                  imagenes.forEach(element => {
-                    if (element.id == this.id) {
-                      textEnerg += element.name + ' '
-                    }
-                  })
-                })
-              var res3 = textEnerg.slice(0, -1)
-              let valores3 = res3.split(' ')
+            //   $('#lonchEnerg')
+            //     .find('.energeticos')
+            //     .each(function() {
+            //       imagenes.forEach(element => {
+            //         if (element.id == this.id) {
+            //           textEnerg += element.name + ' '
+            //         }
+            //       })
+            //     })
+            //   var res3 = textEnerg.slice(0, -1)
+            //   let valores3 = res3.split(' ')
 
-              var descarga = JSON.stringify({
-                puntaje: puntajeJuego,
-                alimentos: [
-                  {
-                    constuctor: [valores2],
-                    energeticos: [valores3],
-                    reguladores: [valores]
-                  }
-                ]
-              })
-              $('#descarga')
-                .show('slow')
-                .click(function(e) {
-                  let dataUri =
-                    'data:application/json;charset=utf-8,' +
-                    encodeURIComponent(descarga)
-                  let exportFileDefaultName = '../objetos.json'
-                  let linkElement = document.createElement('a')
-                  linkElement.setAttribute('href', dataUri)
-                  linkElement.setAttribute('download', exportFileDefaultName)
-                  linkElement.click()
-                })
-            }
+            //   var descarga = JSON.stringify({
+            //     puntaje: puntajeJuego,
+            //     alimentos: [
+            //       {
+            //         constuctor: [valores2],
+            //         energeticos: [valores3],
+            //         reguladores: [valores]
+            //       }
+            //     ]
+            //   })
+            //   $('#descarga')
+            //     .show('slow')
+            //     .click(function(e) {
+            //       let dataUri =
+            //         'data:application/json;charset=utf-8,' +
+            //         encodeURIComponent(descarga)
+            //       let exportFileDefaultName = '../objetos.json'
+            //       let linkElement = document.createElement('a')
+            //       linkElement.setAttribute('href', dataUri)
+            //       linkElement.setAttribute('download', exportFileDefaultName)
+            //       linkElement.click()
+            //     })
+            // }
             /* termina el codigo del json  */
 
             localStorage.removeItem('juego')
-            partida[0].estado = 't'
+            partida.estado = 't'
             actualizarPartida()
-            hazArmado.play()
             $('.puntaje2').text(puntajeJuego.toString())
-            window.location.href = 'felicidades'
+            hazArmado.play()
+            hazArmado.addEventListener("ended", function(){
+              
+              window.location.href = 'felicidades'
+         })
           }
         }
       })
