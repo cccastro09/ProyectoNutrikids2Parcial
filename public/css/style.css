@@ -93,6 +93,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf3fa', end
     position:relative;
     left:28%;
 }
+
+
+.lonchera2{
+    
+  background-image: url('../images/lonchera3.png');
+  width:40%;
+  height:  66vh;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: top;
+  position:relative;
+  left:28%;
+}
+
+
 .cc2{
   /*border: 6px solid rgb(156, 58, 58);*/
   height : 240px;
